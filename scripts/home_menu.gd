@@ -11,6 +11,7 @@ extends Control
 @onready var exit_button: Button = $CenterContainer/MenuButtons/ExitButton
 @onready var footer_label: Label = $Footer
 @onready var decorations: Node2D = $Decorations
+@onready var play_button: Button = $CenterContainer/MenuButtons/PlayButton
 
 # Shared font — created once to avoid null font descriptor crashes
 var _font: SystemFont = null
@@ -172,7 +173,7 @@ func _on_daily_pressed() -> void:
 	var unix_time = OS.get_unix_time()
 	global.daily_challenge_seed = int(unix_time / day_seconds)
 	# Choose a level based on seed
-	var level_count = level_data.levels.size()
+	var level_count = LevelData.levels.size()
 	global.current_level = global.daily_challenge_seed % level_count
 	# Go straight to the game scene (skip selector for daily)
 	var main_scene = preload("res://scenes/main.tscn")

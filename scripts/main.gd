@@ -55,12 +55,13 @@ func _ready() -> void:
 	current_level_idx = global.current_level
 	# Ensure board_area never blocks mouse events from reaching Area2D nodes
 	board_area.mouse_filter = Control.MOUSE_FILTER_IGNORE
-        # After loading level, adjust timer visibility based on mode
-        timer_panel.visible = global.current_mode != "Relax"
-        # Ensure timer is active only for Timed/Challenge modes
-        timer_active = global.current_mode != "Relax"
-        if timer_active:
-            game_timer.start(1.0)
+	_load_level(current_level_idx)
+	# After loading level, adjust timer visibility based on mode
+	timer_panel.visible = global.current_mode != "Relax"
+	# Ensure timer is active only for Timed/Challenge modes
+	timer_active = global.current_mode != "Relax"
+	if timer_active:
+		game_timer.start(1.0)
 
 func _apply_premium_styling() -> void:
 	var font = _font
