@@ -15,6 +15,7 @@ func _ready() -> void:
 	_font.font_weight = 700
 	
 	_apply_styling()
+	_apply_selected_background()
 	_populate_level_grid()
 	
 	back_button.pressed.connect(_on_back_pressed)
@@ -226,3 +227,14 @@ func _on_card_pressed(idx: int, card: Button, is_unlocked: bool) -> void:
 func _on_back_pressed() -> void:
 	sound.play_click()
 	get_tree().change_scene_to_file("res://scenes/home_menu.tscn")
+
+func _apply_selected_background() -> void:
+	match global.current_background:
+		"Forest":
+			$Background.color = Color("#A8D5BA")
+		"Ocean":
+			$Background.color = Color("#7FA8C8")
+		"Desert":
+			$Background.color = Color("#D2B48C")
+		_:
+			$Background.color = Color(0.964706, 0.937255, 0.898039, 1)

@@ -23,6 +23,7 @@ func _ready() -> void:
 	_font.font_weight = 700
 	
 	_apply_styling()
+	_apply_selected_background()
 	_update_toggle_buttons()
 	
 	# Connect signals
@@ -195,3 +196,14 @@ func _on_yes_pressed() -> void:
 	_update_toggle_buttons()
 	confirmation_overlay.visible = false
 	sound.play_win() # Fun celebratory sound to confirm reset!
+
+func _apply_selected_background() -> void:
+	match global.current_background:
+		"Forest":
+			$Background.color = Color("#A8D5BA")
+		"Ocean":
+			$Background.color = Color("#7FA8C8")
+		"Desert":
+			$Background.color = Color("#D2B48C")
+		_:
+			$Background.color = Color(0.964706, 0.937255, 0.898039, 1)

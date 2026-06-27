@@ -114,12 +114,13 @@ func _generate_piece_geometry() -> void:
 	outline.points   = outline_pts
 	collision_polygon.polygon = rounded
 
-	# 7. UV mapping: map the entire board (0,0)→board_pixel_size to UV (0,0)→(1,1)
+	# 7. UV mapping: map the entire board (0,0)→board_pixel_size to UV (0,0)→(1,1) in texture space
 	# This ensures the full level image is spread across the full grid.
 	var uv: PackedVector2Array = PackedVector2Array()
 	var origin = Vector2(solved_grid_pos) * cell_size
+	var tex_size = texture.get_size() if texture != null else board_pixel_size
 	for pt in rounded:
-		uv.append((origin + pt) / board_pixel_size)
+		uv.append(((origin + pt) / board_pixel_size) * tex_size)
 	visual.uv      = uv
 	visual.texture = texture
 

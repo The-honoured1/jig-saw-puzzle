@@ -6,8 +6,14 @@ var current_level: int = 0
 var level_scores: Dictionary = {} # level_idx (int) -> best_time_seconds (int)
 
 # Premium UI settings
-var current_mode: String = "Relax"  # Options: "Relax", "Timed", "Challenge"
-var current_background: String = "Default"
+var current_mode: String = "Relax":
+	set(val):
+		current_mode = val
+		save_progress()
+var current_background: String = "Default":
+	set(val):
+		current_background = val
+		save_progress()
 var daily_challenge_seed: int = 0  # calculated daily
 
 var sound_enabled: bool = true:
@@ -31,6 +37,8 @@ func save_progress() -> void:
 	var config = ConfigFile.new()
 	config.set_value("settings", "sound_enabled", sound_enabled)
 	config.set_value("settings", "music_enabled", music_enabled)
+	config.set_value("settings", "current_mode", current_mode)
+	config.set_value("settings", "current_background", current_background)
 	
 	# Convert level_scores dictionary keys to strings since ConfigFile doesn't support int keys directly in some situations,
 	# or just store it as is since Godot 4 ConfigFile supports Variant dictionary keys. Variant dictionary is safe!
@@ -44,6 +52,8 @@ func load_progress() -> void:
 	if err == OK:
 		sound_enabled = config.get_value("settings", "sound_enabled", true)
 		music_enabled = config.get_value("settings", "music_enabled", true)
+		current_mode = config.get_value("settings", "current_mode", "Relax")
+		current_background = config.get_value("settings", "current_background", "Default")
 		level_scores = config.get_value("progress", "scores", {})
 		
 		# Sync with sound manager

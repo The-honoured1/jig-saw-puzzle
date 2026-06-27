@@ -20,6 +20,7 @@ var confetti_scene: PackedScene = preload("res://scenes/confetti.tscn")
 @onready var win_stats: Label    = $WinScreen/Dialog/StatsLabel
 @onready var next_button: Button   = $WinScreen/Dialog/NextButton
 @onready var replay_button: Button = $WinScreen/Dialog/ReplayButton
+@onready var home_button: Button   = $WinScreen/Dialog/HomeButton
 
 # Timer
 @onready var game_timer: Timer = $GameTimer
@@ -45,15 +46,20 @@ func _ready() -> void:
 	_font.font_weight = 700
 
 	_apply_premium_styling()
+	_apply_selected_background()
 
 	back_button.pressed.connect(_on_back_button_pressed)
 	restart_button.pressed.connect(_on_restart_button_pressed)
 	next_button.pressed.connect(_on_next_button_pressed)
 	replay_button.pressed.connect(_on_replay_button_pressed)
+	home_button.pressed.connect(_on_home_button_pressed)
 	game_timer.timeout.connect(_on_timer_timeout)
 
 	current_level_idx = global.current_level
-	# Ensure board_area never blocks mouse events from reaching Area2D nodes
+	# Ensure background and layout controls don't consume mouse input so physics/Area2D picking works
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	$Background.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	$Layout.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	board_area.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_load_level(current_level_idx)
 	# After loading level, adjust timer visibility based on mode
@@ -162,6 +168,32 @@ func _apply_premium_styling() -> void:
 	replay_button.add_theme_stylebox_override("hover", replay_btn_h)
 	replay_button.add_theme_stylebox_override("pressed", replay_btn_h)
 
+	# Home button
+	var home_btn_style = StyleBoxFlat.new()
+	home_btn_style.bg_color = Color("#FFFDF9")
+	home_btn_style.set_corner_radius_all(16)
+	home_btn_style.border_width_left = 2; home_btn_style.border_width_top = 2
+	home_btn_style.border_width_right = 2; home_btn_style.border_width_bottom = 2
+	home_btn_style.border_color = Color("#E6DFD3")
+	var home_btn_h = home_btn_style.duplicate(); home_btn_h.bg_color = Color("#ECE5D8")
+	home_button.add_theme_font_override("font", font)
+	home_button.add_theme_font_size_override("font_size", 18)
+	home_button.add_theme_color_override("font_color", Color("#8C7E72"))
+	home_button.add_theme_stylebox_override("normal", home_btn_style)
+	home_button.add_theme_stylebox_override("hover", home_btn_h)
+	home_button.add_theme_stylebox_override("pressed", home_btn_h)
+
+func _apply_selected_background() -> void:
+	match global.current_background:
+		"Forest":
+			$Background.color = Color("#A8D5BA")
+		"Ocean":
+			$Background.color = Color("#7FA8C8")
+		"Desert":
+			$Background.color = Color("#D2B48C")
+		_:
+			$Background.color = Color("#F6EDE5")
+
 func _load_level(idx: int) -> void:
 	if idx >= LevelData.levels.size():
 		idx = 0; global.current_level = 0; current_level_idx = 0
@@ -186,7 +218,7 @@ func _load_level(idx: int) -> void:
 	var avail_w   = board_area.size.x - padding * 2.0
 	var avail_h   = board_area.size.y - padding * 2.0
 	var cell_size = min(avail_w / float(level_info.grid_cols),
-	                    avail_h / float(level_info.grid_rows))
+						avail_h / float(level_info.grid_rows))
 	cell_size = clampf(cell_size, 60.0, 140.0)
 	_active_cell_size = cell_size
 
@@ -322,6 +354,10 @@ func _trigger_victory() -> void:
 	var tw = create_tween().set_parallel(true)
 	tw.tween_property(win_dialog, "scale",      Vector2(1.0, 1.0), 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tw.tween_property(win_dialog, "modulate:a", 1.0,               0.2)
+
+func _on_home_button_pressed() -> void:
+	sound.play_click()
+	get_tree().change_scene_to_file("res://scenes/home_menu.tscn")
 
 func _on_back_button_pressed() -> void:
 	sound.play_click()
