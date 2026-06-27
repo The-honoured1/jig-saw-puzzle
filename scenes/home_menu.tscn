@@ -75,10 +75,41 @@ layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
 
+[node name="DailyButton" type="Button" parent="CenterContainer/MenuButtons"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+text = "DAILY CHALLENGE"
+
 [node name="PlayButton" type="Button" parent="CenterContainer/MenuButtons"]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 text = "PLAY GAME"
+
+[node name="ModeSelector" type="OptionButton" parent="CenterContainer/MenuButtons"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+item_count = 3
+popup/item_0/text = "Relax"
+popup/item_1/text = "Timed"
+popup/item_1/id = 1
+popup/item_2/text = "Challenge"
+popup/item_2/id = 2
+
+[node name="BackgroundSelector" type="HBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="BG1" type="Button" parent="CenterContainer/BackgroundSelector"]
+layout_mode = 2
+text = "Forest"
+
+[node name="BG2" type="Button" parent="CenterContainer/BackgroundSelector"]
+layout_mode = 2
+text = "Ocean"
+
+[node name="BG3" type="Button" parent="CenterContainer/BackgroundSelector"]
+layout_mode = 2
+text = "Desert"
 
 [node name="SettingsButton" type="Button" parent="CenterContainer/MenuButtons"]
 custom_minimum_size = Vector2(0, 70)

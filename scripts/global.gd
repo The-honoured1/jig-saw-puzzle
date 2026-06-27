@@ -5,6 +5,11 @@ const SAVE_PATH: String = "user://jigsaw_save.cfg"
 var current_level: int = 0
 var level_scores: Dictionary = {} # level_idx (int) -> best_time_seconds (int)
 
+# Premium UI settings
+var current_mode: String = "Relax"  # Options: "Relax", "Timed", "Challenge"
+var current_background: String = "Default"
+var daily_challenge_seed: int = 0  # calculated daily
+
 var sound_enabled: bool = true:
 	set(val):
 		sound_enabled = val

@@ -2,7 +2,11 @@ extends Control
 
 @onready var title_label: Label = $CenterContainer/LogoArea/Title
 @onready var subtitle_label: Label = $CenterContainer/LogoArea/Subtitle
-@onready var play_button: Button = $CenterContainer/MenuButtons/PlayButton
+@onready var daily_button: Button = $CenterContainer/MenuButtons/DailyButton
+@onready var mode_selector: OptionButton = $CenterContainer/MenuButtons/ModeSelector
+@onready var bg_forest_button: Button = $CenterContainer/BackgroundSelector/BG1
+@onready var bg_ocean_button: Button = $CenterContainer/BackgroundSelector/BG2
+@onready var bg_desert_button: Button = $CenterContainer/BackgroundSelector/BG3
 @onready var settings_button: Button = $CenterContainer/MenuButtons/SettingsButton
 @onready var exit_button: Button = $CenterContainer/MenuButtons/ExitButton
 @onready var footer_label: Label = $Footer
@@ -22,10 +26,12 @@ func _ready() -> void:
 	
 	_apply_styling()
 	
-	# Connect buttons
-	play_button.pressed.connect(_on_play_pressed)
-	settings_button.pressed.connect(_on_settings_pressed)
-	exit_button.pressed.connect(_on_exit_pressed)
+	# Connect new UI elements
+	daily_button.pressed.connect(_on_daily_pressed)
+	mode_selector.item_selected.connect(_on_mode_selected)
+	bg_forest_button.pressed.connect(_on_bg_forest_pressed)
+	bg_ocean_button.pressed.connect(_on_bg_ocean_pressed)
+	bg_desert_button.pressed.connect(_on_bg_desert_pressed)
 	
 	# Create decorative background puzzle shape floaters
 	_spawn_decorations()
@@ -160,6 +166,34 @@ func _on_settings_pressed() -> void:
 	sound.play_click()
 	get_tree().change_scene_to_file("res://scenes/settings_menu.tscn")
 
-func _on_exit_pressed() -> void:
-	sound.play_click()
-	get_tree().quit()
+func _on_daily_pressed() -> void:
+	# Compute a deterministic seed based on current day
+	var day_seconds = 86400
+	var unix_time = OS.get_unix_time()
+	global.daily_challenge_seed = int(unix_time / day_seconds)
+	# Choose a level based on seed
+	var level_count = level_data.levels.size()
+	global.current_level = global.daily_challenge_seed % level_count
+	# Go straight to the game scene (skip selector for daily)
+	var main_scene = preload("res://scenes/main.tscn")
+	get_tree().change_scene_to_packed(main_scene)
+
+func _on_mode_selected(index: int) -> void:
+	var mode_text = mode_selector.get_item_text(index)
+	global.current_mode = mode_text
+	# Optionally hide timer UI in main based on mode – handled in main.gd
+
+func _apply_background(color: Color) -> void:
+	$Background.color = color
+
+func _on_bg_forest_pressed() -> void:
+	global.current_background = "Forest"
+	_apply_background(Color("#A8D5BA"))
+
+func _on_bg_ocean_pressed() -> void:
+	global.current_background = "Ocean"
+	_apply_background(Color("#7FA8C8"))
+
+func _on_bg_desert_pressed() -> void:
+	global.current_background = "Desert"
+	_apply_background(Color("#D2B48C"))
