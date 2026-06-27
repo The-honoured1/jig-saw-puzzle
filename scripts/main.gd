@@ -71,114 +71,120 @@ func _ready() -> void:
 
 func _apply_premium_styling() -> void:
 	var font = _font
-
+	var text_color = Color("#2F241E")
+	var text_mute = Color("#7A6758")
+	var surface = Color("#FFF8F1")
+	var border = Color("#D6C2A9")
+	var primary = Color("#DFAF57")
+	var shadow_tint = Color(0.10, 0.07, 0.04, 0.16)
+	
 	level_label.add_theme_font_override("font", font)
-	level_label.add_theme_font_size_override("font_size", 26)
-	level_label.add_theme_color_override("font_color", Color("#2F241E"))
+	level_label.add_theme_font_size_override("font_size", 30)
+	level_label.add_theme_color_override("font_color", text_color)
 
 	# Back Button
 	var back_style = StyleBoxFlat.new()
-	back_style.bg_color = Color("#FFFDF9")
-	back_style.set_corner_radius_all(14)
+	back_style.bg_color = surface
+	back_style.set_corner_radius_all(18)
 	back_style.border_width_left = 2; back_style.border_width_top = 2
 	back_style.border_width_right = 2; back_style.border_width_bottom = 2
-	back_style.border_color = Color("#E6DFD3")
+	back_style.border_color = border
 	back_button.add_theme_font_override("font", font)
 	back_button.add_theme_font_size_override("font_size", 22)
-	back_button.add_theme_color_override("font_color", Color("#2F241E"))
+	back_button.add_theme_color_override("font_color", text_color)
 	back_button.add_theme_stylebox_override("normal", back_style)
-	var back_hover = back_style.duplicate(); back_hover.bg_color = Color("#ECE5D8")
+	var back_hover = back_style.duplicate(); back_hover.bg_color = surface.lightened(0.04)
 	back_button.add_theme_stylebox_override("hover", back_hover)
 	back_button.add_theme_stylebox_override("pressed", back_hover)
 
 	# Timer Panel
 	var timer_style = StyleBoxFlat.new()
-	timer_style.bg_color = Color("#FFFDF9")
-	timer_style.set_corner_radius_all(16)
+	timer_style.bg_color = surface
+	timer_style.set_corner_radius_all(18)
 	timer_style.border_width_left = 2; timer_style.border_width_top = 2
 	timer_style.border_width_right = 2; timer_style.border_width_bottom = 2
-	timer_style.border_color = Color("#E6DFD3")
-	timer_style.shadow_color = Color(0.18, 0.12, 0.08, 0.06)
-	timer_style.shadow_size = 6
-	timer_style.shadow_offset = Vector2(0, 3)
+	timer_style.border_color = border
+	timer_style.shadow_color = shadow_tint
+	timer_style.shadow_size = 10
+	timer_style.shadow_offset = Vector2(0, 5)
 	timer_panel.add_theme_stylebox_override("panel", timer_style)
 	timer_label.add_theme_font_override("font", font)
 	timer_label.add_theme_font_size_override("font_size", 24)
-	timer_label.add_theme_color_override("font_color", Color("#2F241E"))
+	timer_label.add_theme_color_override("font_color", text_color)
 
 	# Restart Button
 	restart_button.text = "⟳"
+	restart_button.custom_minimum_size = Vector2(80, 80)
 	restart_button.add_theme_font_override("font", font)
 	restart_button.add_theme_font_size_override("font_size", 32)
-	restart_button.add_theme_color_override("font_color", Color("#2F241E"))
+	restart_button.add_theme_color_override("font_color", text_color)
 	var restart_style = StyleBoxFlat.new()
-	restart_style.bg_color = Color("#FFFDF9")
-	restart_style.set_corner_radius_all(14)
+	restart_style.bg_color = surface
+	restart_style.set_corner_radius_all(18)
 	restart_style.border_width_left = 2; restart_style.border_width_top = 2
 	restart_style.border_width_right = 2; restart_style.border_width_bottom = 2
-	restart_style.border_color = Color("#E6DFD3")
+	restart_style.border_color = border
 	restart_button.add_theme_stylebox_override("normal", restart_style)
-	var restart_hover = restart_style.duplicate(); restart_hover.bg_color = Color("#ECE5D8")
+	var restart_hover = restart_style.duplicate(); restart_hover.bg_color = surface.lightened(0.04)
 	restart_button.add_theme_stylebox_override("hover", restart_hover)
 	restart_button.add_theme_stylebox_override("pressed", restart_hover)
 
 	# Win Dialog
 	var dialog_style = StyleBoxFlat.new()
-	dialog_style.bg_color = Color("#FFFDF9")
+	dialog_style.bg_color = surface
 	dialog_style.set_corner_radius_all(28)
 	dialog_style.border_width_left = 3; dialog_style.border_width_top = 3
 	dialog_style.border_width_right = 3; dialog_style.border_width_bottom = 3
-	dialog_style.border_color = Color("#D5CCA8")
-	dialog_style.shadow_color = Color(0, 0, 0, 0.15)
-	dialog_style.shadow_size = 20
+	dialog_style.border_color = primary.lightened(0.12)
+	dialog_style.shadow_color = Color(0, 0, 0, 0.16)
+	dialog_style.shadow_size = 22
 	dialog_style.shadow_offset = Vector2(0, 10)
 	win_dialog.add_theme_stylebox_override("panel", dialog_style)
 	win_title.add_theme_font_override("font", font)
-	win_title.add_theme_font_size_override("font_size", 30)
-	win_title.add_theme_color_override("font_color", Color("#2F241E"))
+	win_title.add_theme_font_size_override("font_size", 32)
+	win_title.add_theme_color_override("font_color", text_color)
 	win_stats.add_theme_font_override("font", font)
 	win_stats.add_theme_font_size_override("font_size", 22)
-	win_stats.add_theme_color_override("font_color", Color("#6C5E53"))
+	win_stats.add_theme_color_override("font_color", text_mute)
 
 	# Win buttons
 	var win_btn = StyleBoxFlat.new()
-	win_btn.bg_color = Color("#D5CCA8")
-	win_btn.set_corner_radius_all(16)
+	win_btn.bg_color = primary
+	win_btn.set_corner_radius_all(18)
 	win_btn.border_width_bottom = 4
-	win_btn.border_color = Color("#B4AA86")
-	var win_btn_h = win_btn.duplicate(); win_btn_h.bg_color = Color("#E3DAC1")
+	win_btn.border_color = primary.darkened(0.14)
+	var win_btn_h = win_btn.duplicate(); win_btn_h.bg_color = primary.lightened(0.08)
 	next_button.add_theme_font_override("font", font)
 	next_button.add_theme_font_size_override("font_size", 20)
-	next_button.add_theme_color_override("font_color", Color("#2F241E"))
+	next_button.add_theme_color_override("font_color", text_color)
 	next_button.add_theme_stylebox_override("normal", win_btn)
 	next_button.add_theme_stylebox_override("hover", win_btn_h)
 	next_button.add_theme_stylebox_override("pressed", win_btn_h)
 
 	var replay_btn = StyleBoxFlat.new()
-	replay_btn.bg_color = Color("#FFFDF9")
-	replay_btn.set_corner_radius_all(16)
+	replay_btn.bg_color = surface
+	replay_btn.set_corner_radius_all(18)
 	replay_btn.border_width_left = 2; replay_btn.border_width_top = 2
 	replay_btn.border_width_right = 2; replay_btn.border_width_bottom = 2
-	replay_btn.border_color = Color("#E6DFD3")
-	var replay_btn_h = replay_btn.duplicate(); replay_btn_h.bg_color = Color("#ECE5D8")
+	replay_btn.border_color = border
+	var replay_btn_h = replay_btn.duplicate(); replay_btn_h.bg_color = surface.lightened(0.04)
 	replay_button.add_theme_font_override("font", font)
 	replay_button.add_theme_font_size_override("font_size", 18)
-	replay_button.add_theme_color_override("font_color", Color("#2F241E"))
+	replay_button.add_theme_color_override("font_color", text_color)
 	replay_button.add_theme_stylebox_override("normal", replay_btn)
 	replay_button.add_theme_stylebox_override("hover", replay_btn_h)
 	replay_button.add_theme_stylebox_override("pressed", replay_btn_h)
 
-	# Home button
 	var home_btn_style = StyleBoxFlat.new()
-	home_btn_style.bg_color = Color("#FFFDF9")
-	home_btn_style.set_corner_radius_all(16)
+	home_btn_style.bg_color = surface
+	home_btn_style.set_corner_radius_all(18)
 	home_btn_style.border_width_left = 2; home_btn_style.border_width_top = 2
 	home_btn_style.border_width_right = 2; home_btn_style.border_width_bottom = 2
-	home_btn_style.border_color = Color("#E6DFD3")
-	var home_btn_h = home_btn_style.duplicate(); home_btn_h.bg_color = Color("#ECE5D8")
+	home_btn_style.border_color = border
+	var home_btn_h = home_btn_style.duplicate(); home_btn_h.bg_color = surface.lightened(0.04)
 	home_button.add_theme_font_override("font", font)
 	home_button.add_theme_font_size_override("font_size", 18)
-	home_button.add_theme_color_override("font_color", Color("#8C7E72"))
+	home_button.add_theme_color_override("font_color", text_mute)
 	home_button.add_theme_stylebox_override("normal", home_btn_style)
 	home_button.add_theme_stylebox_override("hover", home_btn_h)
 	home_button.add_theme_stylebox_override("pressed", home_btn_h)

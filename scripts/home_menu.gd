@@ -48,128 +48,87 @@ func _ready() -> void:
 
 func _apply_styling() -> void:
 	var font = _font
+	var primary = Color("#DFAF57")
+	var secondary = Color("#6A8E7C")
+	var surface = Color("#FFF8F1")
+	var border = Color("#D6C2A9")
+	var text_color = Color("#2F241E")
+	var text_mute = Color("#7A6758")
 	
 	# Title
 	title_label.add_theme_font_override("font", font)
-	title_label.add_theme_font_size_override("font_size", 48)
-	title_label.add_theme_color_override("font_color", Color("#2F241E"))
+	title_label.add_theme_font_size_override("font_size", 56)
+	title_label.add_theme_color_override("font_color", text_color)
 	
 	# Subtitle
 	subtitle_label.add_theme_font_override("font", font)
-	subtitle_label.add_theme_font_size_override("font_size", 14)
-	subtitle_label.add_theme_color_override("font_color", Color("#8C7E72"))
+	subtitle_label.add_theme_font_size_override("font_size", 16)
+	subtitle_label.add_theme_color_override("font_color", text_mute)
 	
 	# Footer
 	footer_label.add_theme_font_override("font", font)
-	footer_label.add_theme_font_size_override("font_size", 11)
-	footer_label.add_theme_color_override("font_color", Color("#A5998E"))
+	footer_label.add_theme_font_size_override("font_size", 12)
+	footer_label.add_theme_color_override("font_color", text_mute)
 	
-	# ── Daily Button (secondary warm style) ──────────────────────────────────
-	var daily_style = StyleBoxFlat.new()
-	daily_style.bg_color = Color("#6B7A5E")  # Earthy olive-green
-	daily_style.set_corner_radius_all(18)
-	daily_style.border_width_bottom = 5
-	daily_style.border_color = Color("#4F5A46")
+	daily_button.custom_minimum_size = Vector2(0, 82)
+	play_button.custom_minimum_size = Vector2(0, 90)
+	settings_button.custom_minimum_size = Vector2(0, 80)
+	exit_button.custom_minimum_size = Vector2(0, 62)
+	mode_selector.custom_minimum_size = Vector2(0, 62)
+	bg_forest_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	bg_ocean_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	bg_desert_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	
-	var daily_hover = daily_style.duplicate()
-	daily_hover.bg_color = Color("#7E9070")
+	_style_button(daily_button, secondary, Color("#FFFDF9"), border)
+	_style_button(play_button, primary, text_color, border, 24)
+	_style_button(settings_button, surface, text_color, border, 20)
 	
-	daily_button.add_theme_font_override("font", font)
-	daily_button.add_theme_font_size_override("font_size", 20)
-	daily_button.add_theme_color_override("font_color", Color("#FFFDF9"))
-	daily_button.add_theme_stylebox_override("normal", daily_style)
-	daily_button.add_theme_stylebox_override("hover", daily_hover)
-	daily_button.add_theme_stylebox_override("pressed", daily_hover)
-	daily_button.add_theme_stylebox_override("focus", daily_style)
+	# Exit button ghost style
+	exit_button.add_theme_font_override("font", font)
+	exit_button.add_theme_font_size_override("font_size", 18)
+	exit_button.add_theme_color_override("font_color", text_mute)
+	var ghost = StyleBoxEmpty.new()
+	exit_button.add_theme_stylebox_override("normal", ghost)
+	exit_button.add_theme_stylebox_override("hover", ghost)
+	exit_button.add_theme_stylebox_override("pressed", ghost)
+	exit_button.add_theme_stylebox_override("focus", ghost)
 	
-	# ── Play Button (primary golden CTA) ─────────────────────────────────────
-	var play_style = StyleBoxFlat.new()
-	play_style.bg_color = Color("#D5CCA8")
-	play_style.set_corner_radius_all(18)
-	play_style.border_width_bottom = 5
-	play_style.border_color = Color("#B4AA86")
-	
-	var play_hover = play_style.duplicate()
-	play_hover.bg_color = Color("#E3DAC1")
-	
-	play_button.add_theme_font_override("font", font)
-	play_button.add_theme_font_size_override("font_size", 24)
-	play_button.add_theme_color_override("font_color", Color("#2F241E"))
-	play_button.add_theme_stylebox_override("normal", play_style)
-	play_button.add_theme_stylebox_override("hover", play_hover)
-	play_button.add_theme_stylebox_override("pressed", play_hover)
-	play_button.add_theme_stylebox_override("focus", play_style)
-	
-	# ── Mode Selector (OptionButton) ─────────────────────────────────────────
+	# Option selector
 	var mode_style = StyleBoxFlat.new()
-	mode_style.bg_color = Color("#FFFDF9")
-	mode_style.set_corner_radius_all(18)
+	mode_style.bg_color = surface
+	mode_style.set_corner_radius_all(20)
 	mode_style.border_width_left = 2
 	mode_style.border_width_top = 2
 	mode_style.border_width_right = 2
 	mode_style.border_width_bottom = 2
-	mode_style.border_color = Color("#D5CCA8")
-	
+	mode_style.border_color = border
 	var mode_hover = mode_style.duplicate()
-	mode_hover.bg_color = Color("#F5EED8")
-	
+	mode_hover.bg_color = surface.lightened(0.04)
 	mode_selector.add_theme_font_override("font", font)
 	mode_selector.add_theme_font_size_override("font_size", 18)
-	mode_selector.add_theme_color_override("font_color", Color("#2F241E"))
+	mode_selector.add_theme_color_override("font_color", text_color)
 	mode_selector.add_theme_stylebox_override("normal", mode_style)
 	mode_selector.add_theme_stylebox_override("hover", mode_hover)
 	mode_selector.add_theme_stylebox_override("pressed", mode_hover)
 	mode_selector.add_theme_stylebox_override("focus", mode_style)
 	
-	# ── Settings Button (outline style) ──────────────────────────────────────
-	var settings_style = StyleBoxFlat.new()
-	settings_style.bg_color = Color("#FFFDF9")
-	settings_style.set_corner_radius_all(18)
-	settings_style.border_width_left = 2
-	settings_style.border_width_top = 2
-	settings_style.border_width_right = 2
-	settings_style.border_width_bottom = 2
-	settings_style.border_color = Color("#E6DFD3")
-	
-	var settings_hover = settings_style.duplicate()
-	settings_hover.bg_color = Color("#ECE5D8")
-	
-	settings_button.add_theme_font_override("font", font)
-	settings_button.add_theme_font_size_override("font_size", 20)
-	settings_button.add_theme_color_override("font_color", Color("#2F241E"))
-	settings_button.add_theme_stylebox_override("normal", settings_style)
-	settings_button.add_theme_stylebox_override("hover", settings_hover)
-	settings_button.add_theme_stylebox_override("pressed", settings_hover)
-	settings_button.add_theme_stylebox_override("focus", settings_style)
-	
-	# ── Exit Button (ghost/text style) ───────────────────────────────────────
-	exit_button.add_theme_font_override("font", font)
-	exit_button.add_theme_font_size_override("font_size", 18)
-	exit_button.add_theme_color_override("font_color", Color("#A5998E"))
-	
-	var flat_style = StyleBoxEmpty.new()
-	exit_button.add_theme_stylebox_override("normal", flat_style)
-	exit_button.add_theme_stylebox_override("hover", flat_style)
-	exit_button.add_theme_stylebox_override("pressed", flat_style)
-	exit_button.add_theme_stylebox_override("focus", flat_style)
-	
-	# ── Background Selector Buttons ───────────────────────────────────────────
+	# Background selector pills
 	var bg_labels = ["🌲 Forest", "🌊 Ocean", "🏜 Desert"]
 	var bg_btns = [bg_forest_button, bg_ocean_button, bg_desert_button]
-	var bg_colors = [Color("#4A7A5A"), Color("#3A6B9A"), Color("#9A7A4A")]
-	var bg_hover_colors = [Color("#5A9A6A"), Color("#4A82BA"), Color("#BA9A5A")]
-	
+	var bg_colors = [Color("#4D7D64"), Color("#3D78A1"), Color("#A7784D")]
+	var bg_hover_colors = [Color("#6F9D82"), Color("#5791C4"), Color("#C1946B")]
 	for j in range(bg_btns.size()):
 		var btn = bg_btns[j]
 		var bg_s = StyleBoxFlat.new()
 		bg_s.bg_color = bg_colors[j]
-		bg_s.set_corner_radius_all(12)
-		bg_s.border_width_bottom = 3
-		bg_s.border_color = bg_colors[j].darkened(0.25)
-		
+		bg_s.set_corner_radius_all(18)
+		bg_s.border_width_left = 2
+		bg_s.border_width_top = 2
+		bg_s.border_width_right = 2
+		bg_s.border_width_bottom = 2
+		bg_s.border_color = bg_colors[j].darkened(0.24)
 		var bg_h = bg_s.duplicate()
 		bg_h.bg_color = bg_hover_colors[j]
-		
 		btn.text = bg_labels[j]
 		btn.add_theme_font_override("font", font)
 		btn.add_theme_font_size_override("font_size", 14)
@@ -178,6 +137,28 @@ func _apply_styling() -> void:
 		btn.add_theme_stylebox_override("hover", bg_h)
 		btn.add_theme_stylebox_override("pressed", bg_h)
 		btn.add_theme_stylebox_override("focus", bg_s)
+	
+	# Strong background color for the scene
+	$Background.color = Color("#F5E8DD")
+
+func _style_button(btn: Button, bg: Color, fg: Color, border_col: Color, text_size: int = 20) -> void:
+	var box = StyleBoxFlat.new()
+	box.bg_color = bg
+	box.set_corner_radius_all(22)
+	box.border_width_left = 2
+	box.border_width_top = 2
+	box.border_width_right = 2
+	box.border_width_bottom = 2
+	box.border_color = border_col
+	var hover_box = box.duplicate()
+	hover_box.bg_color = bg.lightened(0.08)
+	btn.add_theme_font_override("font", _font)
+	btn.add_theme_font_size_override("font_size", text_size)
+	btn.add_theme_color_override("font_color", fg)
+	btn.add_theme_stylebox_override("normal", box)
+	btn.add_theme_stylebox_override("hover", hover_box)
+	btn.add_theme_stylebox_override("pressed", hover_box)
+	btn.add_theme_stylebox_override("focus", box)
 
 func _spawn_decorations() -> void:
 	# Spawn 6 floating pieces in the background

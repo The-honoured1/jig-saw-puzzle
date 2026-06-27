@@ -22,35 +22,38 @@ func _ready() -> void:
 
 func _apply_styling() -> void:
 	var font = _font
+	var text_color = Color("#2F241E")
+	var text_mute = Color("#7A6758")
+	var surface = Color("#FFF7F0")
+	var border = Color("#D6C2A9")
 	
 	title_label.add_theme_font_override("font", font)
-	title_label.add_theme_font_size_override("font_size", 30)
-	title_label.add_theme_color_override("font_color", Color("#2F241E"))
+	title_label.add_theme_font_size_override("font_size", 34)
+	title_label.add_theme_color_override("font_color", text_color)
 	
 	# Back Button style
 	var back_style = StyleBoxFlat.new()
-	back_style.bg_color = Color("#FFFDF9")
-	back_style.corner_radius_top_left = 14
-	back_style.corner_radius_top_right = 14
-	back_style.corner_radius_bottom_left = 14
-	back_style.corner_radius_bottom_right = 14
+	back_style.bg_color = surface
+	back_style.set_corner_radius_all(18)
 	back_style.border_width_left = 2
 	back_style.border_width_top = 2
 	back_style.border_width_right = 2
 	back_style.border_width_bottom = 2
-	back_style.border_color = Color("#E6DFD3")
+	back_style.border_color = border
 	back_button.add_theme_font_override("font", font)
 	back_button.add_theme_font_size_override("font_size", 22)
-	back_button.add_theme_color_override("font_color", Color("#2F241E"))
+	back_button.add_theme_color_override("font_color", text_color)
 	back_button.add_theme_stylebox_override("normal", back_style)
 	
 	var back_hover = back_style.duplicate()
-	back_hover.bg_color = Color("#ECE5D8")
+	back_hover.bg_color = surface.lightened(0.04)
 	back_button.add_theme_stylebox_override("hover", back_hover)
 	back_button.add_theme_stylebox_override("pressed", back_hover)
 	
-	# Stylize grid column structure dynamically for mobile portrait layout
+	# Card layout
 	grid_container.columns = 2
+	grid_container.theme_override_constants/h_separation = 24
+	grid_container.theme_override_constants/v_separation = 24
 
 func _populate_level_grid() -> void:
 	var font = _font

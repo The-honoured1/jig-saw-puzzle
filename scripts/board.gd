@@ -52,18 +52,19 @@ func setup(p_cols: int, p_rows: int, p_cell_size: float, p_texture: Texture2D = 
 			cell_panel.position = Vector2(c * cell_size + 3, r * cell_size + 3)
 			
 			var style = StyleBoxFlat.new()
-			style.bg_color = Color(0.88, 0.84, 0.78, 0.55) # Warm translucent slot
-			style.corner_radius_top_left = 14
-			style.corner_radius_top_right = 14
-			style.corner_radius_bottom_left = 14
-			style.corner_radius_bottom_right = 14
-			style.border_width_left = 2
-			style.border_width_top = 2
-			style.border_width_right = 2
-			style.border_width_bottom = 2
-			style.border_color = Color(0.7, 0.65, 0.58, 0.4)
-			
-			cell_panel.add_theme_stylebox_override("panel", style)
+		style.bg_color = Color(0.92, 0.88, 0.82, 0.68) # Warm translucent slot
+		style.corner_radius_top_left = 18
+		style.corner_radius_top_right = 18
+		style.corner_radius_bottom_left = 18
+		style.corner_radius_bottom_right = 18
+		style.border_width_left = 2
+		style.border_width_top = 2
+		style.border_width_right = 2
+		style.border_width_bottom = 2
+		style.border_color = Color(0.72, 0.66, 0.58, 0.55)
+		style.shadow_color = Color(0, 0, 0, 0.06)
+		style.shadow_size = 10
+		style.shadow_offset = Vector2(0, 4)
 			cells_container.add_child(cell_panel)
 
 func local_to_grid(local_pos: Vector2) -> Vector2i:

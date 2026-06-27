@@ -38,93 +38,92 @@ func _ready() -> void:
 
 func _apply_styling() -> void:
 	var font = _font
+	var text_color = Color("#2F241E")
+	var text_mute = Color("#7A6758")
+	var surface = Color("#FFF7F0")
+	var border = Color("#D6C2A9")
+	var danger = Color("#D96B6B")
 	
 	title_label.add_theme_font_override("font", font)
-	title_label.add_theme_font_size_override("font_size", 30)
-	title_label.add_theme_color_override("font_color", Color("#2F241E"))
+	title_label.add_theme_font_size_override("font_size", 34)
+	title_label.add_theme_color_override("font_color", text_color)
 	
-	# Back Button style
-	var back_style = StyleBoxFlat.new()
-	back_style.bg_color = Color("#FFFDF9")
-	back_style.corner_radius_top_left = 14
-	back_style.corner_radius_top_right = 14
-	back_style.corner_radius_bottom_left = 14
-	back_style.corner_radius_bottom_right = 14
-	back_style.border_width_left = 2
-	back_style.border_width_top = 2
-	back_style.border_width_right = 2
-	back_style.border_width_bottom = 2
-	back_style.border_color = Color("#E6DFD3")
-	back_button.add_theme_font_override("font", font)
-	back_button.add_theme_font_size_override("font_size", 22)
-	back_button.add_theme_color_override("font_color", Color("#2F241E"))
-	back_button.add_theme_stylebox_override("normal", back_style)
+	# Shared button helper
+	func style_button(btn: Button, bg: Color, fg: Color, border_col: Color, text_size: int = 20) -> void:
+		var style = StyleBoxFlat.new()
+		style.bg_color = bg
+		style.set_corner_radius_all(20)
+		style.border_width_left = 2
+		style.border_width_top = 2
+		style.border_width_right = 2
+		style.border_width_bottom = 2
+		style.border_color = border_col
+		var hover = style.duplicate()
+		hover.bg_color = bg.lightened(0.05)
+		btn.add_theme_font_override("font", font)
+		btn.add_theme_font_size_override("font_size", text_size)
+		btn.add_theme_color_override("font_color", fg)
+		btn.add_theme_stylebox_override("normal", style)
+		btn.add_theme_stylebox_override("hover", hover)
+		btn.add_theme_stylebox_override("pressed", hover)
+		btn.add_theme_stylebox_override("focus", style)
 	
-	var back_hover = back_style.duplicate()
-	back_hover.bg_color = Color("#ECE5D8")
-	back_button.add_theme_stylebox_override("hover", back_hover)
-	back_button.add_theme_stylebox_override("pressed", back_hover)
+	back_button.custom_minimum_size = Vector2(0, 70)
+	sound_toggle.custom_minimum_size = Vector2(0, 76)
+	music_toggle.custom_minimum_size = Vector2(0, 76)
+	reset_button.custom_minimum_size = Vector2(0, 76)
 	
-	# Reset Button style (Red style)
-	var reset_style = StyleBoxFlat.new()
-	reset_style.bg_color = Color("#D96B6B")
-	reset_style.corner_radius_top_left = 18
-	reset_style.corner_radius_top_right = 18
-	reset_style.corner_radius_bottom_left = 18
-	reset_style.corner_radius_bottom_right = 18
-	reset_style.border_width_bottom = 4
-	reset_style.border_color = Color("#B85353")
+	style_button(back_button, surface, text_color, border, 22)
+	style_button(sound_toggle, Color("#D5CCA8") if global.sound_enabled else Color("#ECE5D8"), text_color, border, 20)
+	style_button(music_toggle, Color("#D5CCA8") if global.music_enabled else Color("#ECE5D8"), text_color, border, 20)
+	style_button(reset_button, danger, Color("#FFFDF9"), danger.darkened(0.12), 18)
 	
-	var reset_hover = reset_style.duplicate()
-	reset_hover.bg_color = Color("#E87D7D")
-	
-	reset_button.add_theme_font_override("font", font)
-	reset_button.add_theme_font_size_override("font_size", 18)
-	reset_button.add_theme_color_override("font_color", Color("#FFFDF9"))
-	reset_button.add_theme_stylebox_override("normal", reset_style)
-	reset_button.add_theme_stylebox_override("hover", reset_hover)
-	reset_button.add_theme_stylebox_override("pressed", reset_hover)
-	
-	# Confirmation Dialog style
+	# Confirmation dialog styling
 	var dialog_style = StyleBoxFlat.new()
-	dialog_style.bg_color = Color("#FFFDF9")
-	dialog_style.corner_radius_top_left = 24
-	dialog_style.corner_radius_top_right = 24
-	dialog_style.corner_radius_bottom_left = 24
-	dialog_style.corner_radius_bottom_right = 24
+	dialog_style.bg_color = surface
+	dialog_style.set_corner_radius_all(26)
 	dialog_style.border_width_left = 2
 	dialog_style.border_width_top = 2
 	dialog_style.border_width_right = 2
 	dialog_style.border_width_bottom = 2
-	dialog_style.border_color = Color("#E6DFD3")
+	dialog_style.border_color = border
 	confirm_dialog.add_theme_stylebox_override("panel", dialog_style)
 	
 	confirm_text.add_theme_font_override("font", font)
 	confirm_text.add_theme_font_size_override("font_size", 18)
-	confirm_text.add_theme_color_override("font_color", Color("#2F241E"))
+	confirm_text.add_theme_color_override("font_color", text_color)
 	
-	# Yes/No buttons
+	# Yes/No style
 	var yes_style = StyleBoxFlat.new()
-	yes_style.bg_color = Color("#D96B6B")
-	yes_style.corner_radius_top_left = 14
-	yes_style.corner_radius_top_right = 14
-	yes_style.corner_radius_bottom_left = 14
-	yes_style.corner_radius_bottom_right = 14
+	yes_style.bg_color = danger
+	yes_style.set_corner_radius_all(16)
+	yes_style.border_width_bottom = 4
+	yes_style.border_color = danger.darkened(0.12)
 	yes_button.add_theme_font_override("font", font)
 	yes_button.add_theme_font_size_override("font_size", 18)
 	yes_button.add_theme_color_override("font_color", Color("#FFFDF9"))
 	yes_button.add_theme_stylebox_override("normal", yes_style)
+	var yes_hover = yes_style.duplicate()
+	yes_hover.bg_color = danger.lightened(0.08)
+	yes_button.add_theme_stylebox_override("hover", yes_hover)
+	yes_button.add_theme_stylebox_override("pressed", yes_hover)
 	
 	var no_style = StyleBoxFlat.new()
-	no_style.bg_color = Color("#ECE5D8")
-	no_style.corner_radius_top_left = 14
-	no_style.corner_radius_top_right = 14
-	no_style.corner_radius_bottom_left = 14
-	no_style.corner_radius_bottom_right = 14
+	no_style.bg_color = surface
+	no_style.set_corner_radius_all(16)
+	no_style.border_width_left = 2
+	no_style.border_width_top = 2
+	no_style.border_width_right = 2
+	no_style.border_width_bottom = 2
+	no_style.border_color = border
 	no_button.add_theme_font_override("font", font)
 	no_button.add_theme_font_size_override("font_size", 18)
-	no_button.add_theme_color_override("font_color", Color("#2F241E"))
+	no_button.add_theme_color_override("font_color", text_color)
 	no_button.add_theme_stylebox_override("normal", no_style)
+	var no_hover = no_style.duplicate()
+	no_hover.bg_color = surface.lightened(0.05)
+	no_button.add_theme_stylebox_override("hover", no_hover)
+	no_button.add_theme_stylebox_override("pressed", no_hover)
 
 func _update_toggle_buttons() -> void:
 	var font = _font
