@@ -9,6 +9,8 @@ signal drag_ended(piece)
 @onready var interaction_area: Area2D = $InteractionArea
 @onready var collision_polygon: CollisionPolygon2D = $InteractionArea/CollisionPolygon
 
+var UI = preload("res://scripts/ui_style.gd")
+
 # Piece Properties
 var cells: Array = [] # Array of Vector2i
 var solved_grid_pos: Vector2i = Vector2i.ZERO
@@ -129,8 +131,8 @@ func _ready() -> void:
 	interaction_area.mouse_entered.connect(_on_mouse_entered)
 	interaction_area.mouse_exited.connect(_on_mouse_exited)
 	shadow.color = Color(0, 0, 0, 0.28)
-	outline.default_color = Color("#3B2F27")
-	outline.width = 8.0
+	outline.default_color = UIStyle.COLOR_TEXT
+	outline.width = 10.0
 
 func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:

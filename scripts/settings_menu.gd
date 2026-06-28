@@ -48,35 +48,21 @@ func _apply_styling() -> void:
 	title_label.add_theme_font_size_override("font_size", 34)
 	title_label.add_theme_color_override("font_color", text_color)
 	
-	# Shared button helper
-	func style_button(btn: Button, bg: Color, fg: Color, border_col: Color, text_size: int = 20) -> void:
-		var style = StyleBoxFlat.new()
-		style.bg_color = bg
-		style.set_corner_radius_all(20)
-		style.border_width_left = 2
-		style.border_width_top = 2
-		style.border_width_right = 2
-		style.border_width_bottom = 2
-		style.border_color = border_col
-		var hover = style.duplicate()
-		hover.bg_color = bg.lightened(0.05)
-		btn.add_theme_font_override("font", font)
-		btn.add_theme_font_size_override("font_size", text_size)
-		btn.add_theme_color_override("font_color", fg)
-		btn.add_theme_stylebox_override("normal", style)
-		btn.add_theme_stylebox_override("hover", hover)
-		btn.add_theme_stylebox_override("pressed", hover)
-		btn.add_theme_stylebox_override("focus", style)
+	var UI = preload("res://scripts/ui_style.gd")
 	
 	back_button.custom_minimum_size = Vector2(0, 70)
 	sound_toggle.custom_minimum_size = Vector2(0, 76)
 	music_toggle.custom_minimum_size = Vector2(0, 76)
 	reset_button.custom_minimum_size = Vector2(0, 76)
 	
-	style_button(back_button, surface, text_color, border, 22)
-	style_button(sound_toggle, Color("#D5CCA8") if global.sound_enabled else Color("#ECE5D8"), text_color, border, 20)
-	style_button(music_toggle, Color("#D5CCA8") if global.music_enabled else Color("#ECE5D8"), text_color, border, 20)
-	style_button(reset_button, danger, Color("#FFFDF9"), danger.darkened(0.12), 18)
+	back_button.custom_minimum_size = Vector2(0, 70)
+	UIStyle.style_button(back_button, surface, text_color, border, 22, 20)
+	sound_toggle.custom_minimum_size = Vector2(0, 76)
+	UIStyle.style_button(sound_toggle, Color("#D5CCA8") if global.sound_enabled else Color("#ECE5D8"), text_color, border, 20, 20)
+	music_toggle.custom_minimum_size = Vector2(0, 76)
+	UIStyle.style_button(music_toggle, Color("#D5CCA8") if global.music_enabled else Color("#ECE5D8"), text_color, border, 20, 20)
+	reset_button.custom_minimum_size = Vector2(0, 76)
+	UIStyle.style_button(reset_button, danger, Color("#FFFDF9"), danger.darkened(0.12), 18, 18)
 	
 	# Confirmation dialog styling
 	var dialog_style = StyleBoxFlat.new()
@@ -94,36 +80,13 @@ func _apply_styling() -> void:
 	confirm_text.add_theme_color_override("font_color", text_color)
 	
 	# Yes/No style
-	var yes_style = StyleBoxFlat.new()
-	yes_style.bg_color = danger
-	yes_style.set_corner_radius_all(16)
-	yes_style.border_width_bottom = 4
-	yes_style.border_color = danger.darkened(0.12)
 	yes_button.add_theme_font_override("font", font)
 	yes_button.add_theme_font_size_override("font_size", 18)
-	yes_button.add_theme_color_override("font_color", Color("#FFFDF9"))
-	yes_button.add_theme_stylebox_override("normal", yes_style)
-	var yes_hover = yes_style.duplicate()
-	yes_hover.bg_color = danger.lightened(0.08)
-	yes_button.add_theme_stylebox_override("hover", yes_hover)
-	yes_button.add_theme_stylebox_override("pressed", yes_hover)
-	
-	var no_style = StyleBoxFlat.new()
-	no_style.bg_color = surface
-	no_style.set_corner_radius_all(16)
-	no_style.border_width_left = 2
-	no_style.border_width_top = 2
-	no_style.border_width_right = 2
-	no_style.border_width_bottom = 2
-	no_style.border_color = border
+	UIStyle.style_button(yes_button, danger, Color("#FFFDF9"), danger.darkened(0.12), 18, 16)
+
 	no_button.add_theme_font_override("font", font)
 	no_button.add_theme_font_size_override("font_size", 18)
-	no_button.add_theme_color_override("font_color", text_color)
-	no_button.add_theme_stylebox_override("normal", no_style)
-	var no_hover = no_style.duplicate()
-	no_hover.bg_color = surface.lightened(0.05)
-	no_button.add_theme_stylebox_override("hover", no_hover)
-	no_button.add_theme_stylebox_override("pressed", no_hover)
+	UIStyle.style_button(no_button, surface, text_color, border, 18, 16)
 
 func _update_toggle_buttons() -> void:
 	var font = _font

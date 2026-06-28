@@ -54,6 +54,8 @@ func _apply_styling() -> void:
 	var border = Color("#D6C2A9")
 	var text_color = Color("#2F241E")
 	var text_mute = Color("#7A6758")
+
+	var UI = preload("res://scripts/ui_style.gd")
 	
 	# Title
 	title_label.add_theme_font_override("font", font)
@@ -79,9 +81,9 @@ func _apply_styling() -> void:
 	bg_ocean_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	bg_desert_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	
-	_style_button(daily_button, secondary, Color("#FFFDF9"), border)
-	_style_button(play_button, primary, text_color, border, 24)
-	_style_button(settings_button, surface, text_color, border, 20)
+	UIStyle.style_button(daily_button, secondary, Color("#FFFDF9"), border, 20, 22)
+	UIStyle.style_button(play_button, primary, text_color, border, 24, 24)
+	UIStyle.style_button(settings_button, surface, text_color, border, 20, 20)
 	
 	# Exit button ghost style
 	exit_button.add_theme_font_override("font", font)

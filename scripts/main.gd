@@ -77,25 +77,17 @@ func _apply_premium_styling() -> void:
 	var border = Color("#D6C2A9")
 	var primary = Color("#DFAF57")
 	var shadow_tint = Color(0.10, 0.07, 0.04, 0.16)
+
+	var UI = preload("res://scripts/ui_style.gd")
 	
 	level_label.add_theme_font_override("font", font)
 	level_label.add_theme_font_size_override("font_size", 30)
 	level_label.add_theme_color_override("font_color", text_color)
 
 	# Back Button
-	var back_style = StyleBoxFlat.new()
-	back_style.bg_color = surface
-	back_style.set_corner_radius_all(18)
-	back_style.border_width_left = 2; back_style.border_width_top = 2
-	back_style.border_width_right = 2; back_style.border_width_bottom = 2
-	back_style.border_color = border
 	back_button.add_theme_font_override("font", font)
 	back_button.add_theme_font_size_override("font_size", 22)
-	back_button.add_theme_color_override("font_color", text_color)
-	back_button.add_theme_stylebox_override("normal", back_style)
-	var back_hover = back_style.duplicate(); back_hover.bg_color = surface.lightened(0.04)
-	back_button.add_theme_stylebox_override("hover", back_hover)
-	back_button.add_theme_stylebox_override("pressed", back_hover)
+	UIStyle.style_button(back_button, surface, text_color, border, 22, 18)
 
 	# Timer Panel
 	var timer_style = StyleBoxFlat.new()
@@ -118,16 +110,7 @@ func _apply_premium_styling() -> void:
 	restart_button.add_theme_font_override("font", font)
 	restart_button.add_theme_font_size_override("font_size", 32)
 	restart_button.add_theme_color_override("font_color", text_color)
-	var restart_style = StyleBoxFlat.new()
-	restart_style.bg_color = surface
-	restart_style.set_corner_radius_all(18)
-	restart_style.border_width_left = 2; restart_style.border_width_top = 2
-	restart_style.border_width_right = 2; restart_style.border_width_bottom = 2
-	restart_style.border_color = border
-	restart_button.add_theme_stylebox_override("normal", restart_style)
-	var restart_hover = restart_style.duplicate(); restart_hover.bg_color = surface.lightened(0.04)
-	restart_button.add_theme_stylebox_override("hover", restart_hover)
-	restart_button.add_theme_stylebox_override("pressed", restart_hover)
+	UIStyle.style_button(restart_button, surface, text_color, border, 32, 18)
 
 	# Win Dialog
 	var dialog_style = StyleBoxFlat.new()
@@ -147,47 +130,21 @@ func _apply_premium_styling() -> void:
 	win_stats.add_theme_font_size_override("font_size", 22)
 	win_stats.add_theme_color_override("font_color", text_mute)
 
-	# Win buttons
-	var win_btn = StyleBoxFlat.new()
-	win_btn.bg_color = primary
-	win_btn.set_corner_radius_all(18)
-	win_btn.border_width_bottom = 4
-	win_btn.border_color = primary.darkened(0.14)
-	var win_btn_h = win_btn.duplicate(); win_btn_h.bg_color = primary.lightened(0.08)
+	# Win buttons (use shared UIStyle)
 	next_button.add_theme_font_override("font", font)
 	next_button.add_theme_font_size_override("font_size", 20)
 	next_button.add_theme_color_override("font_color", text_color)
-	next_button.add_theme_stylebox_override("normal", win_btn)
-	next_button.add_theme_stylebox_override("hover", win_btn_h)
-	next_button.add_theme_stylebox_override("pressed", win_btn_h)
+	UIStyle.style_button(next_button, primary, text_color, primary.darkened(0.14), 20, 18)
 
-	var replay_btn = StyleBoxFlat.new()
-	replay_btn.bg_color = surface
-	replay_btn.set_corner_radius_all(18)
-	replay_btn.border_width_left = 2; replay_btn.border_width_top = 2
-	replay_btn.border_width_right = 2; replay_btn.border_width_bottom = 2
-	replay_btn.border_color = border
-	var replay_btn_h = replay_btn.duplicate(); replay_btn_h.bg_color = surface.lightened(0.04)
 	replay_button.add_theme_font_override("font", font)
 	replay_button.add_theme_font_size_override("font_size", 18)
 	replay_button.add_theme_color_override("font_color", text_color)
-	replay_button.add_theme_stylebox_override("normal", replay_btn)
-	replay_button.add_theme_stylebox_override("hover", replay_btn_h)
-	replay_button.add_theme_stylebox_override("pressed", replay_btn_h)
+	UIStyle.style_button(replay_button, surface, text_color, border, 18, 18)
 
-	var home_btn_style = StyleBoxFlat.new()
-	home_btn_style.bg_color = surface
-	home_btn_style.set_corner_radius_all(18)
-	home_btn_style.border_width_left = 2; home_btn_style.border_width_top = 2
-	home_btn_style.border_width_right = 2; home_btn_style.border_width_bottom = 2
-	home_btn_style.border_color = border
-	var home_btn_h = home_btn_style.duplicate(); home_btn_h.bg_color = surface.lightened(0.04)
 	home_button.add_theme_font_override("font", font)
 	home_button.add_theme_font_size_override("font_size", 18)
 	home_button.add_theme_color_override("font_color", text_mute)
-	home_button.add_theme_stylebox_override("normal", home_btn_style)
-	home_button.add_theme_stylebox_override("hover", home_btn_h)
-	home_button.add_theme_stylebox_override("pressed", home_btn_h)
+	UIStyle.style_button(home_button, surface, text_mute, border, 18, 18)
 
 func _apply_selected_background() -> void:
 	match global.current_background:

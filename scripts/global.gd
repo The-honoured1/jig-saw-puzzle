@@ -6,29 +6,48 @@ var current_level: int = 0
 var level_scores: Dictionary = {} # level_idx (int) -> best_time_seconds (int)
 
 # Premium UI settings
-var current_mode: String = "Relax":
-	set(val):
-		current_mode = val
-		save_progress()
-var current_background: String = "Default":
-	set(val):
-		current_background = val
-		save_progress()
+var _current_mode: String = "Relax"
+var current_mode: String setget _set_current_mode, _get_current_mode
+var _current_background: String = "Default"
+var current_background: String setget _set_current_background, _get_current_background
 var daily_challenge_seed: int = 0  # calculated daily
 
-var sound_enabled: bool = true:
-	set(val):
-		sound_enabled = val
-		if has_node("/root/sound"):
-			get_node("/root/sound").sound_enabled = val
-		save_progress()
+var _sound_enabled: bool = true
+var sound_enabled: bool setget _set_sound_enabled, _get_sound_enabled
+var _music_enabled: bool = true
+var music_enabled: bool setget _set_music_enabled, _get_music_enabled
 
-var music_enabled: bool = true:
-	set(val):
-		music_enabled = val
-		if has_node("/root/sound"):
-			get_node("/root/sound").music_enabled = val
-		save_progress()
+func _set_current_mode(val: String) -> void:
+	_current_mode = val
+	save_progress()
+
+func _get_current_mode() -> String:
+	return _current_mode
+
+func _set_current_background(val: String) -> void:
+	_current_background = val
+	save_progress()
+
+func _get_current_background() -> String:
+	return _current_background
+
+func _set_sound_enabled(val: bool) -> void:
+	_sound_enabled = val
+	if has_node("/root/sound"):
+		get_node("/root/sound").sound_enabled = val
+	save_progress()
+
+func _get_sound_enabled() -> bool:
+	return _sound_enabled
+
+func _set_music_enabled(val: bool) -> void:
+	_music_enabled = val
+	if has_node("/root/sound"):
+		get_node("/root/sound").music_enabled = val
+	save_progress()
+
+func _get_music_enabled() -> bool:
+	return _music_enabled
 
 func _ready() -> void:
 	load_progress()
